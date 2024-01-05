@@ -1,92 +1,109 @@
 #include <iostream>
 
 int MainMenu();
-int InputData();
-int Add();
-int Subtract();
-int Multiply();
-int Divide();
+int InputData(int, int&);
+int Add(int, int, char&);
+int Subtract(int, int, char&);
+int Multiply(int, int, char&);
+int Division(int, int, char&);
+char EndTrail();
 
 int main()
 {
-    int num1, num2, choice;
-    char continueChoice = 'y';
+    int num1 = 0, num2 = 0, choice, result = 0;
+    char action = '-';
 
     do
     {
         do
         {
-            switch (MainMenu())
+            choice = MainMenu();
+            switch (choice)
             {
             case 1:
-                Add();
+                result = Add(InputData(1, num1), InputData(2, num2), action);
                 break;
             case 2:
-                Subtract();
+                result = Subtract(InputData(1, num1), InputData(2, num2), action);
                 break;
             case 3:
-                Multiply();
+                result = Multiply(InputData(1, num1), InputData(2, num2), action);
                 break;
             case 4:
-                Divide();
+                result = Division(InputData(1, num1), InputData(2, num2), action);
                 break;
             default:
-                std::cout << "You entered an invalid choice!\n\n";
+                std::cout << "INVALID CHOICE!\n\n";
                 break;
             }
-        } while (choice < 0 || choice > 5);
-        std::cout << "Do you want to Contninue [y/n]:";
-        std::cin >> continueChoice;
-        system("cls");
-    } while (continueChoice == 'y');
-    return 0;
+
+            if (choice >= 1 && choice <= 4)
+            {
+                std::cout << num1 << " " << action << " " << num2 << " = " << result << "\n";
+            }
+        } while (choice < 1 || choice > 4);
+
+    } while (EndTrail() == 'y' || EndTrail() == 'Y');
 }
 
-    int MainMenu() {
-    	
+int MainMenu()
+{
     int choice;
+
     std::cout
-                << " === Select Mathematical Solution ===\n"
-                << " 1. Add\n"
-                << " 2. Subtract\n"
-                << " 3. Multipliction\n"
-                << " 4. Division\n"
-                << "\n"
-                << " Enter Choice: ";
-            std::cin >> choice;
-            system("cls");
+        << " === Select a Mathematical Solution ===\n"
+        << " 1. Add\n"
+        << " 2. Subtract\n"
+        << " 3. Multipliction\n"
+        << " 4. Division\n"
+        << " \n"
+        << " Enter Choice: ";
+    std::cin >> choice;
+
+    system("cls");
+
     return choice;
 }
-	int Add() {
-	int num1, num2;
-				std::cout << "Please input number 1:";
-                std::cin >> num1;
-                std::cout << "Please input number 2:";
-                std::cin >> num2;
-                std::cout << num1 << " + " << num2 << " = " << num1 + num2 << "\n";
-	}
-	
-	int Subtract() {
-	int num1, num2;
-				std::cout << "Please input number 1:";
-                std::cin >> num1;
-                std::cout << "Please input number 2:";
-                std::cin >> num2;
-                std::cout << num1 << " - " << num2 << " = " << num1 - num2 << "\n";
-	}
-	int Multiply() {
-	int num1, num2;
-				std::cout << "Please input number 1:";
-                std::cin >> num1;
-                std::cout << "Please input number 2:";
-                std::cin >> num2;
-                std::cout << num1 << " * " << num2 << " = " << num1 * num2 << "\n";
-	}
-	int Divide() {
-	int num1, num2;
-				std::cout << "Please input number 1:";
-                std::cin >> num1;
-                std::cout << "Please input number 2:";
-                std::cin >> num2;
-                std::cout << num1 << " / " << num2 << " = " << num1 / num2 << "\n";
-	}
+
+int InputData(int no, int& num)
+{
+    std::cout << "Please input value: ";
+    std::cin >> num;
+    return num;
+}
+
+int Add(int x, int y, char& action)
+{
+    action = '+';
+    return x + y;
+}
+
+int Subtract(int x, int y, char& action)
+{
+    action = '-';
+    return x - y;
+}
+
+int Multiply(int x, int y, char& action)
+{
+    action = '*';
+    return x * y;
+}
+
+int Division(int x, int y, char& action)
+{
+    action = '/';
+    return x / y;
+}
+
+char EndTrail()
+{
+    char continueChoice = 'y';
+
+    std::cout << "Do you still wish to Continue [y/n]:";
+    std::cin >> continueChoice;
+
+    system("cls");
+
+    return continueChoice;
+}
